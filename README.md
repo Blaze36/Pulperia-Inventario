@@ -1,61 +1,62 @@
-# Pulpería Inventario (Android · Kotlin · SQLite)
+# Pulpería Inventario
 
-App para llevar el inventario de una pulpería: productos con precio y stock, entradas y salidas, resumen del valor del inventario, código de barras manual y alertas de stock mínimo.
+App de Android para llevar el inventario de una pulpería. Hecha con **Kotlin** y **SQLite**.
+
+## Qué hace
+
+- Guarda productos con **nombre, precio y stock**.
+- Registra **entradas** (cuando llega mercadería) y **salidas** (cuando se vende).
+- Muestra el **valor total** del inventario y los 5 productos que más valen.
+- Cada producto puede tener un **código de barras** (se escribe a mano).
+- Avisa cuando un producto tiene **poco stock**.
 
 ## Cómo abrirla
 
-1. Abre **Android Studio** (Koala o más reciente) → *Open* → selecciona esta carpeta.
-2. Espera a que termine el *Gradle Sync* (descarga las dependencias; necesita internet la primera vez).
-3. Ejecuta en un emulador o celular con **Android 8.0 (API 26)** o superior.
+1. Abre **Android Studio** y elige *Open*, luego selecciona esta carpeta.
+2. Espera a que termine el *Gradle Sync* (necesita internet la primera vez).
+3. Ejecútala en un emulador o en un celular con Android 8.0 o más nuevo.
 
-> La carpeta no incluye `gradle-wrapper.jar`; Android Studio usa su propio Gradle y lo regenera al sincronizar. Si prefieres la terminal: `gradle wrapper` y luego `./gradlew assembleDebug`.
+## Las 3 pantallas
 
-## Base de datos (SQLite, `DbHelper.kt`)
+| Pantalla | Para qué sirve |
+|---|---|
+| **Productos** | Ver la lista y buscar por nombre o código. El botón **+** crea un producto, tocar un producto lo edita y el ícono rojo lo elimina. |
+| **Movimientos** | Elegir un producto, marcar *Entrada* o *Salida*, escribir la cantidad y registrar. No deja sacar más de lo que hay. |
+| **Resumen** | Ver el valor total del inventario, el top 5 por valor y los productos con stock bajo. |
+
+## Alerta de stock bajo
+
+Cada producto tiene un **stock mínimo** (5 por defecto). Cuando el stock es igual o menor al mínimo:
+
+1. Sale un aviso al registrar una salida.
+2. El producto muestra una etiqueta roja "⚠ Stock bajo" en la lista.
+3. La pestaña *Resumen* muestra un globo con la cantidad de alertas.
+
+## Base de datos
+
+Son dos tablas:
 
 | Tabla | Columnas |
-|-------|----------|
-| `products` | `id`, `name`, `price`, `stock`, `barcode` (único, opcional), `min_stock` |
-| `movements` | `id`, `product_id` (FK → products, `ON DELETE CASCADE`), `qty`, `type` (`IN`/`OUT`), `date` |
+|---|---|
+| `products` | `id`, `name`, `price`, `stock`, `barcode`, `min_stock` |
+| `movements` | `id`, `product_id`, `qty`, `type` (`IN` o `OUT`), `date` |
 
-`barcode` y `min_stock` son las dos columnas extra que piden los retos adicionales.
+El stock solo cambia con movimientos. Por eso, al editar un producto el campo de stock está bloqueado.
 
-Reglas que garantiza la base de datos: precio y stock nunca negativos, cantidad de movimiento mayor a 0, tipo solo `IN` u `OUT`, y código de barras sin repetir.
-
-## Pantallas
-
-- **Productos** – lista con búsqueda por nombre o código. `+` crea, tocar una fila edita, el ícono rojo elimina (con confirmación; también borra su historial).
-- **Movimientos** – eliges el producto (lista o escribiendo su código de barras), marcas Entrada/Salida e ingresas la cantidad. El stock se actualiza y el movimiento se guarda en **una sola transacción**. Una salida mayor al stock disponible se rechaza.
-- **Resumen** – valor total del inventario (`SUM(price * stock)`), top 5 productos por valor y lista de productos con stock bajo.
-
-## Retos adicionales
-
-- **Código de barras manual:** campo opcional al crear/editar un producto; en Movimientos se puede buscar el producto escribiendo el código. No permite códigos repetidos.
-- **Alerta de stock mínimo:** cada producto tiene su `min_stock` (5 por defecto). Se avisa de tres formas cuando `stock <= min_stock`:
-  1. Diálogo emergente al registrar una salida que deja el producto en el mínimo.
-  2. Etiqueta roja "⚠ Stock bajo" en la lista de productos.
-  3. Globo con la cantidad de alertas en la pestaña Resumen, más una tarjeta roja con el detalle.
-
-## Decisiones de diseño
-
-- **El stock solo cambia con movimientos.** Al editar un producto el campo de stock está bloqueado. Al crear un producto con stock inicial se registra automáticamente una entrada, así el historial siempre cuadra con el stock actual.
-- Los montos se muestran en lempiras (`L 1,250.00`); cambia el formato en `Fmt.kt` si usas otra moneda.
-- Sin librerías externas más allá de AndroidX y Material: `SQLiteOpenHelper` directo, View Binding, `RecyclerView` y tres Fragments con navegación inferior.
-
-## Estructura
+## Archivos importantes
 
 ```
 app/src/main/java/com/pulperia/inventario/
-├── MainActivity.kt          navegación inferior + globo de alertas
-├── Fmt.kt                   formato de dinero
+├── MainActivity.kt     menú de abajo y globo de alertas
+├── Fmt.kt              formato de dinero (lempiras)
 ├── data/
-│   ├── Models.kt            Product, Movement, MovementType
-│   └── DbHelper.kt          esquema, CRUD, movimientos, totales y top 5
-└── ui/
-    ├── ProductsFragment.kt  + ProductAdapter.kt
-    ├── MovementsFragment.kt + MovementAdapter.kt
-    └── SummaryFragment.kt
+│   ├── Models.kt       Product y Movement
+│   └── DbHelper.kt     la base de datos
+└── ui/                 una pantalla por archivo (Productos, Movimientos, Resumen)
 ```
 
 ## Ideas para seguir
 
-Escaneo con cámara (ML Kit / CameraX), exportar el inventario a CSV, precio de costo vs. precio de venta, pantalla de ajustes para el mínimo global, pruebas instrumentadas de `DbHelper`.
+- Escanear el código de barras con la cámara.
+- Exportar el inventario a un archivo CSV.
+- Guardar precio de compra y precio de venta.
