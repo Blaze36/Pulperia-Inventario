@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pulpería Inventario</string>
+
+    <!-- Navegación -->
+    <string name="nav_products">Productos</string>
+    <string name="nav_movements">Movimientos</string>
+    <string name="nav_summary">Resumen</string>
+
+    <!-- Productos -->
+    <string name="title_products">Productos</string>
+    <string name="search_hint">Buscar por nombre o código</string>
+    <string name="empty_products">Aún no hay productos.\nToca + para agregar uno.</string>
+    <string name="price_line">Precio: %1$s</string>
+    <string name="barcode_line">Código: %1$s</string>
+    <string name="no_barcode">Sin código de barras</string>
+    <string name="stock_label">Stock</string>
+    <string name="low_stock_badge">⚠ Stock bajo (mín. %1$d)</string>
+    <string name="new_product">Nuevo producto</string>
+    <string name="edit_product">Editar producto</string>
+    <string name="hint_name">Nombre</string>
+    <string name="hint_price">Precio (L)</string>
+    <string name="hint_stock">Stock inicial</string>
+    <string name="hint_stock_locked">Stock actual</string>
+    <string name="hint_barcode">Código de barras (opcional)</string>
+    <string name="hint_min_stock">Stock mínimo (genera alerta)</string>
+    <string name="stock_locked_helper">Para cambiar el stock usa la pantalla Movimientos</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete_product">Eliminar producto</string>
+    <string name="confirm_delete_msg">¿Eliminar \"%1$s\"? También se borrará su historial de movimientos.</string>
+    <string name="delete">Eliminar</string>
+    <string name="product_saved">Producto guardado</string>
+    <string name="product_deleted">Producto eliminado</string>
+    <string name="err_name">Ingresa un nombre</string>
+    <string name="err_price">Ingresa un precio válido (0 o mayor)</string>
+    <string name="err_stock">Ingresa un stock válido (0 o mayor)</string>
+    <string name="err_min_stock">Ingresa un número válido (0 o mayor)</string>
+    <string name="cd_delete">Eliminar</string>
+    <string name="cd_add">Agregar producto</string>
+
+    <!-- Movimientos -->
+    <string name="title_movements">Movimientos</string>
+    <string name="new_movement">Nuevo movimiento</string>
+    <string name="hint_product">Producto</string>
+    <string name="hint_barcode_search">Buscar por código de barras</string>
+    <string name="hint_qty">Cantidad</string>
+    <string name="type_in">Entrada</string>
+    <string name="type_out">Salida</string>
+    <string name="btn_register">Registrar movimiento</string>
+    <string name="stock_current">Stock actual: %1$d</string>
+    <string name="stock_current_low">Stock actual: %1$d (⚠ bajo, mínimo %2$d)</string>
+    <string name="select_product_first">Selecciona un producto</string>
+    <string name="err_qty">Ingresa una cantidad mayor a 0</string>
+    <string name="err_barcode_not_found">No hay un producto con ese código</string>
+    <string name="movement_saved">Movimiento registrado</string>
+    <string name="history">Historial reciente</string>
+    <string name="empty_history">Sin movimientos todavía</string>
+
+    <!-- Alerta de stock mínimo -->
+    <string name="low_stock_title">Stock bajo</string>
+    <string name="low_stock_msg">\"%1$s\" quedó con %2$d unidad(es). El mínimo configurado es %3$d. Considera reabastecer.</string>
+    <string name="ok">Aceptar</string>
+
+    <!-- Resumen -->
+    <string name="title_summary">Resumen</string>
+    <string name="total_value">Valor total del inventario</string>
+    <string name="stats_line">%1$d producto(s) · %2$d unidad(es) en stock</string>
+    <string name="top5_title">Top 5 productos por valor</string>
+    <string name="top_empty">Sin productos registrados</string>
+    <string name="low_title">Alertas de stock bajo</string>
+    <string name="top_detail">%1$s × %2$d u.</string>
+    <string name="low_detail">Stock: %1$d · Mínimo: %2$d</string>
+</resources>
