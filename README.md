@@ -29,7 +29,7 @@ App de Android para llevar el inventario de una pulpería. Hecha con **Kotlin** 
 Cada producto tiene un **stock mínimo** (5 por defecto). Cuando el stock es igual o menor al mínimo:
 
 1. Sale un aviso al registrar una salida.
-2. El producto muestra una etiqueta roja "⚠ Stock bajo" en la lista.
+2. El producto muestra una etiqueta roja Stock bajo en la lista.
 3. La pestaña *Resumen* muestra un globo con la cantidad de alertas.
 
 ## Base de datos
